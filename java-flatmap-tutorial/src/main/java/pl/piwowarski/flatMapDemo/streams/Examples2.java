@@ -1,6 +1,7 @@
 package pl.piwowarski.flatMapDemo.streams;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -41,5 +42,16 @@ class Examples2 {
                 .average()
                 .orElse(0);
         System.out.println("avg: " + avg);
+
+//        Example 4: Convert List<List<Integer>> to primitive int[]
+        List<List<Integer>> numbers = List.of(
+                List.of(1, 2),
+                List.of(3, 4)
+        );
+
+        int[] result = numbers.stream()
+                .flatMapToInt(list -> list.stream().mapToInt(Integer::intValue))
+                .toArray();
+        System.out.println(Arrays.toString(result));
     }
 }
