@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalDouble;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 class Main {
@@ -57,7 +58,7 @@ class Main {
 
         Optional<FileEntry> largestFile2 = flatten(root2).max(Comparator.comparingInt(file -> file.size));
 
-        largestFile2.ifPresent(file->
+        largestFile2.ifPresent(file ->
                 System.out.println("Largest file: " + file.name + " (" + file.size + " KB)"));
 
         // check if a file exists by name
@@ -70,6 +71,12 @@ class Main {
                 .mapToInt(file -> file.size)
                 .average();
         System.out.println("avgSize " + avgSize);
+
+//        ✅ Filter only .jpg files
+        List<FileEntry> jpgFiles = flatten(root2)
+                .filter(fileEntry -> fileEntry.name.endsWith(".jpg"))
+                .collect(Collectors.toList());
+        jpgFiles.forEach(System.out::println);
     }
 
     static Stream<FileEntry> flatten(Folder folder) {
