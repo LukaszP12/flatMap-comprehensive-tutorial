@@ -77,6 +77,14 @@ class Main {
                 .filter(fileEntry -> fileEntry.name.endsWith(".jpg"))
                 .collect(Collectors.toList());
         jpgFiles.forEach(System.out::println);
+
+//        ✅ Top 3 largest files
+        List<FileEntry> top3 = flatten(root2)
+                .sorted(Comparator.comparingInt((FileEntry f) -> f.size).reversed())
+                .limit(3)
+                .collect(Collectors.toList());
+        System.out.println("top3" );
+        top3.forEach(System.out::println);
     }
 
     static Stream<FileEntry> flatten(Folder folder) {
