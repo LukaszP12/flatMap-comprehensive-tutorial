@@ -20,5 +20,14 @@ class Demo {
                 .collect(Collectors.toList());
 
         System.out.println("userNames" + userNames);
+
+        List<String> allFriendNames = users.stream()
+                .map(User::getFriends)
+                .flatMap(List::stream)
+                .map(User::getName)
+                .distinct()
+                .collect(Collectors.toList());
+        System.out.println("allFriendNames: ");
+        allFriendNames.forEach(System.out::println);
     }
 }
