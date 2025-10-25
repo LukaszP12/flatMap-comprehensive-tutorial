@@ -1,5 +1,6 @@
 package pl.piwowarski.flatMapDemo.streams.exampleSplit;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -36,5 +37,17 @@ class Demo {
                 .collect(Collectors.groupingBy(digit -> digit,
                         Collectors.counting()));
         System.out.println(digitCounts);
+
+//        ✅ Optional: Sorted by digit
+        LinkedHashMap<String, Long> sortedDigitCounts  = digitCounts.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey())
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (a, b) -> a,
+                        LinkedHashMap::new
+                ));
+        System.out.println("sortedDigitCounts ");
+        System.out.println(sortedDigitCounts);
     }
 }
