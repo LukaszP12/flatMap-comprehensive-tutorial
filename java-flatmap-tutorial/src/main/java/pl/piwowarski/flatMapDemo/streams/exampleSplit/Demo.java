@@ -1,6 +1,7 @@
 package pl.piwowarski.flatMapDemo.streams.exampleSplit;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -19,5 +20,21 @@ class Demo {
 
         System.out.println("allPhones digits: ");
         System.out.println(singleDigits);
+
+//        ✅ Solution 1: Keep order, remove duplicates (distinct())
+        List<String> uniqueDigits = people.stream()
+                .flatMap(person -> person.getPhones().stream())
+                .flatMap(phone -> Stream.of(phone.split("")))
+                .distinct()
+                .collect(Collectors.toList());
+        System.out.println("uniqueDigits" + uniqueDigits);
+
+//        ✅2. Counting how many times each digit appears next?
+        Map<String, Long> digitCounts = people.stream()
+                .flatMap(person -> person.getPhones().stream())
+                .flatMap(phone -> Stream.of(phone.split("")))
+                .collect(Collectors.groupingBy(digit -> digit,
+                        Collectors.counting()));
+        System.out.println(digitCounts);
     }
 }
