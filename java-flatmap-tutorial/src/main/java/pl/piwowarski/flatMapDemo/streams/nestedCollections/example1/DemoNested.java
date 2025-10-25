@@ -3,7 +3,6 @@ package pl.piwowarski.flatMapDemo.streams.nestedCollections.example1;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 class DemoNested {
     public static void main(String[] args) {
@@ -40,6 +39,7 @@ class DemoNested {
         ));
 
 //        ✅ Stream solution – grouping by department name
+        System.out.println("Stream solution – grouping by department name");
         Map<String, List<String>> employeesByDeptName = company.getDepartments().stream()
                 .collect(Collectors.toMap(
                         dept -> dept.name,
