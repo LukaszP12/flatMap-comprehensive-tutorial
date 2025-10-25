@@ -1,0 +1,35 @@
+package pl.piwowarski.flatMapDemo.streams.nestedCollections.example1;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+class DemoNested {
+    public static void main(String[] args) {
+        Company company = new Company(List.of(
+                new Department(List.of(
+                        new Team(List.of(new Employee("Alice"), new Employee("Bob"))),
+                        new Team(List.of(new Employee("Carol")))
+                )),
+                new Department(List.of(
+                        new Team(List.of(new Employee("Dave"))),
+                        new Team(List.of(new Employee("Eve"), new Employee("Frank")))
+                ))
+        ));
+
+        List<String> allEmployeeNames = company.getDepartments().stream()
+                .flatMap(department -> department.getTeams().stream())
+                .flatMap(team -> team.getEmployees().stream())
+                .map(Employee::getName)
+                .collect(Collectors.toList());
+        System.out.println(allEmployeeNames);
+
+        // group employees by department using streams
+        company.getDepartments().stream()
+                .collect(Collectors.toMap(
+                        dept -> dept,
+                        dept -> dept.getTeams().stream()
+                                .flatMap(team -> team.getEmployees().stream())
+                                .collect(Collectors.toList())
+                ));
+    }
+}
