@@ -1,5 +1,6 @@
 package pl.piwowarski.flatMapDemo.streams.nestedCollections.groupingByExample;
 
+
 import pl.piwowarski.flatMapDemo.streams.nestedCollections.example1.Company;
 import pl.piwowarski.flatMapDemo.streams.nestedCollections.example1.Department;
 import pl.piwowarski.flatMapDemo.streams.nestedCollections.example1.Employee;

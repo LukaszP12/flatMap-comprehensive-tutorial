@@ -1,5 +1,6 @@
 package pl.piwowarski.flatMapDemo.streams.TreeNode;
 
+import java.util.OptionalInt;
 import java.util.stream.Stream;
 
 class TreeDemo {
@@ -20,6 +21,9 @@ class TreeDemo {
         TreeDemo demo = new TreeDemo();
         int sum = demo.sumValues(root);
         System.out.println("Sum of all tree values: " + sum);
+
+        System.out.println("Max value: " + demo.maxValue(root).orElseThrow());
+        System.out.println("Min value: " + demo.minValue(root).orElseThrow());
     }
 
     public Stream<TreeNode> flatten(TreeNode node) {
@@ -30,6 +34,19 @@ class TreeDemo {
                 Stream.of(node),
                 node.getChildren().stream().flatMap(this::flatten)
         );
+    }
+
+    // find max value
+    public OptionalInt maxValue(TreeNode root) {
+        return flatten(root)
+                .mapToInt(TreeNode::getValue)
+                .max();
+    }
+
+    public OptionalInt minValue(TreeNode root) {
+        return flatten(root)
+                .mapToInt(TreeNode::getValue)
+                .min();
     }
 
     // sum all values using flatten()
