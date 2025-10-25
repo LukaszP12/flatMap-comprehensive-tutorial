@@ -6,9 +6,9 @@ class OptionalFlatMapExample {
 
     public static void main(String[] args) {
         Country usa = new Country("+1");
-        Phone phone = new Phone(Optional.of(usa));
-        Contact contact = new Contact(Optional.of(phone));
-        User user = new User(Optional.of(contact));
+        Phone phone = new Phone(usa);
+        Contact contact = new Contact(phone);
+        User user = new User(contact);
 
         String result = Optional.of(user)
                 .flatMap(User::getContact)
